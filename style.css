@@ -1,0 +1,62 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('https://media.discordapp.net/attachments/614886048354271235/1183421535004930049/147594945-memphis-pastel-background-geometric-fluid-design-pink-cool-journal-minimal-graphic-texture-abstract.png?ex=65884630&is=6575d130&hm=5541a632ea1c4ca03fafd39f1f2de6f714e584c38be15e67864a9ae2b1e35439&=&format=webp&quality=lossless&width=1440&height=662');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: -1;
+}
+
+.todo-container {
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+}
+
+.todo-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.input-box {
+    margin: 10px 0;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.submit-button {
+    background-color: #6cb2e4;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: #4a90e2;
+}
