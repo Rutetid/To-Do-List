@@ -37,7 +37,7 @@ function Todos(){
 
             <br />
 
-            <TodoEntry></TodoEntry>
+            <TodoEntry><br /></TodoEntry>
             
       </Card>
       </center>
