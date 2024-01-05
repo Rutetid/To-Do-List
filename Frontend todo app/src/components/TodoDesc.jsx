@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const TodoDesc = ({ description }) => {
-  return (
-    
-      <p>{description}</p>
- 
-  );
-}
+	return <p>{description}</p>;
+};
 
 export default TodoDesc;

@@ -41,10 +41,10 @@
   Testing the server - run `npm run test-todoServer` command in terminal
 */
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const { stringify } = require('querystring');
+const express = require("express");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const { stringify } = require("querystring");
 const path = require("path");
 const cors = require("cors");
 const app = express();
@@ -53,102 +53,92 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-function findIndex(allEntries, id){
-  for(let i = 0; i < allEntries.length ; i++){
-     if (allEntries[i].id === id) return i;
-  }
-   return -1;
+function findIndex(allEntries, id) {
+	for (let i = 0; i < allEntries.length; i++) {
+		if (allEntries[i].id === id) return i;
+	}
+	return -1;
 }
 
-function removeAtIndex(allEntries, index){
-  let newArray = [];
-  for(let i = 0 ; i < allEntries.length ; i++){
-    if( i != index) newArray.push(allEntries[i])
-  }
- return newArray;
+function removeAtIndex(allEntries, index) {
+	const newArray = [];
+	for (let i = 0; i < allEntries.length; i++) {
+		if (i !== index) newArray.push(allEntries[i]);
+	}
+	return newArray;
 }
 
-function displayAtIndex(allEntries, index){
-  let newArray = [];
-  for(let i = 0 ; i < allEntries.length ; i++){
-    if( i = index) newArray.push(allEntries[i])
-  }
- return newArray;
+function displayAtIndex(allEntries, index) {
+	const newArray = [];
+	for (let i = 0; i < allEntries.length; i++) {
+		if ((i === index)) newArray.push(allEntries[i]);
+	}
+	return newArray;
 }
-app.get('/todos', (req, res) => {
-  fs.readFile("todos.json" , "utf-8", (err , data) => {
-  if (err) throw err;
-  var answer = JSON.parse(data);
-   res.status(200).json(answer);
-  });
+app.get("/todos", (req, res) => {
+	fs.readFile("todos.json", "utf-8", (err, data) => {
+		if (err) throw err;
+	  const answer = JSON.parse(data);
+		res.status(200).json(answer);
+	});
 });
 
-app.post('/todos', (req, res) => {
-  fs.readFile("todos.json", "utf-8" , (err , data) =>{
-    if (err) throw err;
-    var answer = JSON.parse(data);
+app.post("/todos", (req, res) => {
+	fs.readFile("todos.json", "utf-8", (err, data) => {
+		if (err) throw err;
+	  const answer = JSON.parse(data);
 
-  let newElement = {
-    id: Math.floor(Math.random() * 1000000),
-    title : req.body.title ,
-    description : req.body.description
-  }
+		const newElement = {
+			id: Math.floor(Math.random() * 1000000),
+			title: req.body.title,
+			description: req.body.description,
+		};
 
-  answer.push(newElement);
+		answer.push(newElement);
 
-  fs.writeFile("todos.json", JSON.stringify(answer) , (err) =>{
-    if (err) throw err;
-      res.status(201).json(newElement);
-    });
-  });
+		fs.writeFile("todos.json", JSON.stringify(answer), (err) => {
+			if (err) throw err;
+			res.status(201).json(newElement);
+		});
+	});
 });
 
-app.delete('/todos/:id' , (req , res) => {
+app.delete("/todos/:id", (req, res) => {
+	fs.readFile("todos.json", "utf-8", (err, data) => {
+		if (err) throw err;
+	  let allEntries = JSON.parse(data);
+		const todoIndex = findIndex(allEntries, parseInt(req.params.id));
 
-  fs.readFile("todos.json" , "utf-8" , (err, data) => {
-    if (err) throw err;
-    var allEntries = JSON.parse(data);
-    const todoIndex = findIndex(allEntries , parseInt(req.params.id));
-
-    if(todoIndex === -1) {
-      res.status(404).send();
-    }
-
-    else {
-      allEntries = removeAtIndex(allEntries , todoIndex);
-      fs.writeFile("todos.json", JSON.stringify(allEntries), (err) =>{
-        if (err) throw err;
-      res.status(200).send();
-    });
-    }
-  });
+		if (todoIndex === -1) {
+			res.status(404).send();
+		} else {
+			allEntries = removeAtIndex(allEntries, todoIndex);
+			fs.writeFile("todos.json", JSON.stringify(allEntries), (err) => {
+				if (err) throw err;
+				res.status(200).send();
+			});
+		}
+	});
 });
 
+app.get("/todos/:id", (req, res) => {
+	fs.readFile("todos.json", "utf-8", (err, data) => {
+		if (err) throw err;
+	  const allEntries = JSON.parse(data);
+		const todoIndex = findIndex(allEntries, parseInt(req.params.id));
+		if (todoIndex === -1) {
+			res.status(404).send();
+		} else {
+			const newArray = [];
+			for (let i = 0; i < allEntries.length; i++) {
+				if (i === todoIndex) newArray.push(allEntries[i]);
+			}
 
-app.get('/todos/:id', (req, res) => {
-
-  fs.readFile("todos.json" , "utf-8" , (err, data) => {
-    if (err) throw err;
-    var allEntries = JSON.parse(data);
-    const todoIndex = findIndex(allEntries , parseInt(req.params.id));
-    if(todoIndex === -1) {
-      res.status(404).send();
-    }
-    else {
-      
-      let newArray = [];
-      for(let i = 0 ; i < allEntries.length ; i++){
-        if( i === todoIndex) newArray.push(allEntries[i])
-      } 
-      
-      res.status(200).json(newArray);
-    }
-  })
-})
-
-
+			res.status(200).json(newArray);
+		}
+	});
+});
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
+	console.log(`Example app listening on port ${port}`);
+});
